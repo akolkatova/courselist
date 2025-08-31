@@ -27,6 +27,13 @@ export const CourseList = () => {
           videoUrl: '(HLS/MP4)',
           price: '100',
         },
+        {
+          courseId: '003',
+          title: 'title',
+          description: 'some text...',
+          videoUrl: '(HLS/MP4)',
+          price: '100',
+        },
       ]),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
@@ -52,16 +59,21 @@ export const CourseList = () => {
       <div className="courses-section">
         {coursesArray.map((course) => (
           <div className="course-card" key={course.courseId}>
-            <div>TITLE: {course.title}</div>
-            <div>{course.description}</div>
-            <div>{course.videoUrl}</div>
-            <div>PRICE: ${course.price}</div>
-            <button
-              className="button"
-              onClick={() => {
-                dispatch({ type: CourseActionType.BUY });
-              }}
-            ></button>
+            <img className="card__image" src="../src/img/preview.png"></img>
+            <div className="card__content">
+              <div className="card__title">TITLE: {course.title}</div>
+              <div className="card__text">{course.description}</div>
+              <video src={course.videoUrl}></video>
+              <div>PRICE: ${course.price}</div>
+              <input
+                className="action-button"
+                type="button"
+                value="BUY COURSE"
+                onClick={() => {
+                  dispatch({ type: CourseActionType.BUY });
+                }}
+              ></input>
+            </div>
           </div>
         ))}
       </div>

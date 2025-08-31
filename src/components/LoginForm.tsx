@@ -9,16 +9,29 @@ export const LoginForm = () => {
     else setError('');
   };
   return (
-    <div className="component-section">
-      <input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={handleSubmit}>Submit</button>
-      {error && <p>{error}</p>}
-    </div>
+    <>
+      <form className="login-form">
+        <input
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
+          className="lf--input"
+          placeholder="Email"
+          type="text"
+        ></input>
+        {error && <p>{error}</p>}
+        <input
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          className="lf--input"
+          placeholder="Password"
+          type="password"
+        ></input>
+
+        <input onClick={handleSubmit} className="action-button" type="submit" value="LOGIN"></input>
+        <a className="lf--forgot" href="#">Forgot password?</a>
+
+        <input onClick={handleSubmit} className="action-button" type="submit" value="LOGOUT"></input>
+      </form>
+    </>
   );
 };
