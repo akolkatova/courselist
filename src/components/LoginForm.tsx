@@ -4,34 +4,61 @@ export const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const handleSubmit = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogin = () => {
     if (!email.includes('@')) setError('Invalid email');
     else setError('');
+    setIsLoggedIn(true);
   };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
+
+  const handleEmailInput = (value: string) => {
+    setError('');
+    setEmail(value);
+  };
+
   return (
     <>
-      <form className="login-form">
-        <input
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-          className="lf--input"
-          placeholder="Email"
-          type="text"
-        ></input>
-        {error && <p>{error}</p>}
-        <input
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-          className="lf--input"
-          placeholder="Password"
-          type="password"
-        ></input>
+      {!isLoggedIn ? (
+        <form className="login-form">
+          <input
+            onChange={(e) => handleEmailInput(e.target.value)}
+            value={email}
+            className="lf--input"
+            placeholder="Email"
+            type="text"
+          ></input>
+          {error && <span className="lf--error">{error}</span>}
+          <input
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            className="lf--input"
+            placeholder="Password"
+            type="password"
+          ></input>
 
-        <input onClick={handleSubmit} className="action-button" type="submit" value="LOGIN"></input>
-        <a className="lf--forgot" href="#">Forgot password?</a>
-
-        <input onClick={handleSubmit} className="action-button" type="submit" value="LOGOUT"></input>
-      </form>
+          <input
+            onClick={handleLogin}
+            className="action-button"
+            type="button"
+            value="LOGIN"
+          ></input>
+          <a className="lf--forgot" href="#">
+            Forgot password?
+          </a>
+        </form>
+      ) : (
+        <input
+          onClick={handleLogout}
+          className="action-button"
+          type="button"
+          value="LOGOUT"
+        ></input>
+      )}
     </>
   );
 };

@@ -20,14 +20,15 @@ img {
 .courses-section {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .course-card {
-  flex: 1;
   margin: 10px;
+  width: 300px;
   background-color: white;
   border: 1px solid gray;
   border-radius: 0.25rem;
@@ -87,6 +88,7 @@ img {
 }
 
 .login-form {
+  margin: auto;
   width: 100%;
   padding: 2em;
   position: relative;
@@ -139,9 +141,15 @@ input {
 }
 
 .lf--forgot {
-  margin-top: 1em;
+  margin: 10px 0 0 10px;
   color: #00d6b7;
   font-size: 0.65em;
-  text-align: center;
+  position: relative;
+}
+
+.lf--error {
+  margin: 0 0 10px 10px;
+  color: #d64b00;
+  font-size: 0.65em;
   position: relative;
 }
