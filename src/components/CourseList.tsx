@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './CourseList.css';
 import { ICourse } from '../types';
 import { CourseCard } from './CourseCard';
 
@@ -14,24 +15,31 @@ export const CourseList = () => {
       body: JSON.stringify([
         {
           courseId: '001',
-          title: 'title',
-          description: 'some text...',
-          videoUrl: '(HLS/MP4)',
-          price: '100',
+          title: 'Big Buck Bunny',
+          description: 'Classic demo video for testing',
+          videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+          price: '50',
         },
         {
           courseId: '002',
-          title: 'title',
-          description: 'some text...',
-          videoUrl: '(HLS/MP4)',
-          price: '100',
+          title: 'Sintel',
+          description: 'Classic demo video for testing',
+          videoUrl: 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4',
+          price: '10',
         },
         {
           courseId: '003',
-          title: 'title',
-          description: 'some text...',
-          videoUrl: '(HLS/MP4)',
+          title: 'Tears of Steel',
+          description: 'Classic demo video for testing',
+          videoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
           price: '100',
+        },
+        {
+          courseId: '004',
+          title: 'Elephants Dream',
+          description: 'Classic demo video for testing',
+          videoUrl: 'https://archive.org/download/ElephantsDream/ed_1024_512kb.mp4',
+          price: '120',
         },
       ]),
       headers: {
@@ -40,7 +48,7 @@ export const CourseList = () => {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json);
+        delete json.id;
         setCourses(json);
       })
       .catch((err) => setError('Failed to fetch courses' + err))
@@ -50,12 +58,10 @@ export const CourseList = () => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
-  const coursesArray = Object.values(courses).filter((el) => el.courseId);
-
   return (
     <>
       <div className="courses-section">
-        {coursesArray.map((course) => (
+        {Object.values(courses).map((course) => (
           <CourseCard courseItem={course} key={course.courseId}></CourseCard>
         ))}
       </div>

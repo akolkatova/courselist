@@ -1,7 +1,6 @@
 import React from 'react';
 import { LoginForm } from './components/LoginForm';
 import { CourseList } from './components/CourseList';
-import { VideoModal } from './components/VideoModal';
 
 function App() {
   return (
@@ -17,7 +16,6 @@ function App() {
           </section>
         </div>
       </main>
-      <VideoModal></VideoModal>
     </>
   );
 }

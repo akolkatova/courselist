@@ -1,0 +1,51 @@
+.login-form {
+  margin: auto;
+  width: 100%;
+  padding: 2em;
+  position: relative;
+  background: rgba(black, 0.15);
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 0;
+    height: 2px;
+    width: 100%;
+
+    background: linear-gradient(to right, #35c3c1, #00d6b7);
+  }
+
+  @media screen and (min-width: 600px) {
+    width: 50vw;
+    max-width: 15em;
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin: 10px;
+}
+
+.lf--input {
+  padding: 1em;
+  border: 0;
+  color: gray;
+  font-size: 1rem;
+}
+
+.lf--forgot {
+  margin: 10px 0 0 10px;
+  color: #00d6b7;
+  font-size: 0.65em;
+  position: relative;
+}
+
+.lf--error {
+  margin: 0 0 10px 10px;
+  color: #d64b00;
+  font-size: 0.65em;
+  position: relative;
+}

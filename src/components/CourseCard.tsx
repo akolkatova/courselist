@@ -1,7 +1,8 @@
 import React from 'react';
-import { ICourse } from '../types';
-import { useDispatch } from 'react-redux';
-import { purchaseCourse, viewCourse } from '../utils';
+import './CourseCard.css';
+import { AppState, ICourse } from '../types';
+import { useDispatch, useSelector } from 'react-redux';
+import { purchaseCourse, setCurrentVideo } from '../redux/actions';
 
 type Props = {
   courseItem: ICourse;
@@ -9,33 +10,40 @@ type Props = {
 
 export const CourseCard = ({ courseItem }: Props) => {
   const dispatch = useDispatch();
-  const purchasedCourses: ICourse[] = []; // store
-  const isPurchased = purchasedCourses.find((el) => el.courseId === courseItem.courseId);
+  const purchasedCourses: string[] = useSelector((state: AppState) => state.purchased);
+  const isPurchased = purchasedCourses.find((el) => el === courseItem.courseId);
+
+  const handlePurchase = (courseId: string) => {
+    dispatch(purchaseCourse(courseId));
+  };
+
+  const handlePlay = (courseId: string) => {
+    dispatch(setCurrentVideo(courseId));
+  };
 
   return (
     <div className="course-card" key={courseItem.courseId}>
-      <img className="card__image" src="../src/img/preview.png"></img>
       <div className="card__content">
-        <div className="card__title">TITLE: {courseItem.title}</div>
+        <div className="card__title">{courseItem.title}</div>
         <div className="card__text">{courseItem.description}</div>
-        <video src={courseItem.videoUrl}></video>
+        <video
+          controls
+          src={courseItem.videoUrl}
+          poster="../src/img/preview.png"
+          onPlay={() => {
+            handlePlay(courseItem.courseId);
+          }}
+        ></video>
         <div>PRICE: ${courseItem.price}</div>
         {isPurchased ? (
-          <input
-            className="action-button"
-            type="button"
-            value="VIEW COURSE"
-            onClick={() => {
-              dispatch(viewCourse(courseItem.courseId) as never);
-            }}
-          ></input>
+          <input className="action-button secondary" type="button" value="VIEW COURSE"></input>
         ) : (
           <input
             className="action-button"
             type="button"
             value="BUY COURSE"
             onClick={() => {
-              dispatch(purchaseCourse(courseItem.courseId) as never);
+              handlePurchase(courseItem.courseId);
             }}
           ></input>
         )}

@@ -19,9 +19,9 @@ export const setCourses = (courses: ICourse[]) => ({
   payload: courses,
 });
 
-export const purchaseCourse = (courses: ICourse[]) => ({
+export const purchaseCourse = (courseId: string) => ({
   type: PURCHASE_COURSE,
-  payload: courses,
+  payload: courseId,
 });
 
 export const setCurrentVideo = (url: string | null) => ({
