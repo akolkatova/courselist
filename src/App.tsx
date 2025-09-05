@@ -1,21 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { LoginForm } from './components/LoginForm';
-import { CourseList } from './components/CourseList';
+import { Header } from './components/Header';
+import { Layout } from './components/Layout';
 
 function App() {
+  const [isAuth, setIsAuth] = useState(false);
+
+  const handleAuth = () => {
+    setIsAuth(false);
+    console.log('isAuth:', isAuth);
+  };
+
   return (
     <>
-      <h1>Courses Libruary</h1>
-      <main className="container">
-        <div className="layout">
-          <aside className="sideBar">
-            <LoginForm></LoginForm>
-          </aside>
-          <section>
-            <CourseList></CourseList>
-          </section>
-        </div>
-      </main>
+      <BrowserRouter>
+        <Header />
+        <main className="container">
+          <div className="layout">
+            <Routes>
+              <Route
+                path="/"
+                element={isAuth ? <Layout /> : <Navigate to="/login" replace />}
+              />
+              <Route path="/login" element={<LoginForm onLogin={() => handleAuth()}/>} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </div>
+        </main>
+      </BrowserRouter>
     </>
   );
 }

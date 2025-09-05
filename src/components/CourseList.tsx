@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './CourseList.css';
-import { ICourse } from '../types';
+import { AppState, ICourse } from '../types';
 import { CourseCard } from './CourseCard';
+import { useSelector } from 'react-redux';
 
 export const CourseList = () => {
   const [courses, setCourses] = useState<ICourse[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  const current = useSelector((state: AppState) => state.current);
 
   useEffect(() => {
     setLoading(true);
@@ -60,6 +63,7 @@ export const CourseList = () => {
 
   return (
     <>
+    <div hidden={!current?.courseId}>Current Course: {current?.title}</div>
       <div className="courses-section">
         {Object.values(courses).map((course) => (
           <CourseCard courseItem={course} key={course.courseId}></CourseCard>

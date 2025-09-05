@@ -1,13 +1,18 @@
 import './LoginForm.css';
 import { useState } from 'react';
-import { isValidEmail, isValidPassword } from '../utils';
-import { AppState } from '../types';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginAction, logoutAction } from '../redux/actions';
+// import { isValidEmail, isValidPassword } from '../utils';
+import { useDispatch } from 'react-redux';
+import { loginAction } from '../redux/actions';
+import { useNavigate } from 'react-router-dom';
 
-export const LoginForm = () => {
+interface Props {
+  onLogin: () => void,
+}
+
+export const LoginForm = ({onLogin}: Props) => {
   const dispatch = useDispatch();
-  const user = useSelector((state: AppState) => state.user);
+  const navigate = useNavigate();
+  // const user = useSelector((state: AppState) => state.user);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -36,24 +41,26 @@ export const LoginForm = () => {
   };
 
   const handleLogin = () => {
-    const isEmailValid = isValidEmail(email);
-    const isPasswordValid = isValidPassword(password);
+    // const isEmailValid = isValidEmail(email);
+    // const isPasswordValid = isValidPassword(password);
 
-    if (!isEmailValid) {
-      setErrorEmail('Invalid email');
-    } else setErrorPassword('');
+    sendLoginRequest(email, password);
+    console.log('onLogin');
+    onLogin();
+    navigate('/');
 
-    if (!isPasswordValid) {
-      setErrorPassword('Invalid password');
-    } else setErrorPassword('');
+    // if (!isEmailValid) {
+    //   setErrorEmail('Invalid email');
+    // } else setErrorPassword('');
 
-    if (isEmailValid && isPasswordValid) {
-      sendLoginRequest(email, password);
-    }
-  };
+    // if (!isPasswordValid) {
+    //   setErrorPassword('Invalid password');
+    // } else setErrorPassword('');
 
-  const handleLogout = () => {
-    dispatch(logoutAction());
+    // if (isEmailValid && isPasswordValid) {
+    //   sendLoginRequest(email, password);
+    //   onLogin();
+    // }
   };
 
   const handlePasswordInput = (value: string) => {
@@ -68,45 +75,28 @@ export const LoginForm = () => {
 
   return (
     <>
-      {!user ? (
-        <form className="login-form">
-          <input
-            onChange={(e) => handleEmailInput(e.target.value)}
-            value={email}
-            className="lf--input"
-            placeholder="Email"
-            type="text"
-          ></input>
-          {errorEmail && <span className="lf--error">{errorEmail}</span>}
-          <input
-            onChange={(e) => handlePasswordInput(e.target.value)}
-            value={password}
-            className="lf--input"
-            placeholder="Password"
-            type="password"
-          ></input>
-          {errorPassword && <span className="lf--error">{errorPassword}</span>}
-          <input
-            onClick={handleLogin}
-            className="action-button"
-            type="button"
-            value="LOGIN"
-          ></input>
-          <a className="lf--forgot" href="#">
-            Forgot password?
-          </a>
-        </form>
-      ) : (
-        <>
-          <p>Hello, {user.name}</p>
-          <input
-            onClick={handleLogout}
-            className="action-button"
-            type="button"
-            value="LOGOUT"
-          ></input>
-        </>
-      )}
+      <form className="login-form">
+        <input
+          onChange={(e) => handleEmailInput(e.target.value)}
+          value={email}
+          className="lf--input"
+          placeholder="Email"
+          type="text"
+        ></input>
+        {errorEmail && <span className="lf--error">{errorEmail}</span>}
+        <input
+          onChange={(e) => handlePasswordInput(e.target.value)}
+          value={password}
+          className="lf--input"
+          placeholder="Password"
+          type="password"
+        ></input>
+        {errorPassword && <span className="lf--error">{errorPassword}</span>}
+        <input onClick={handleLogin} className="action-button" type="button" value="LOGIN"></input>
+        <a className="lf--forgot" href="#">
+          Forgot password?
+        </a>
+      </form>
     </>
   );
 };

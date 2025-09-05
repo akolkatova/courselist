@@ -24,7 +24,7 @@ export const purchaseCourse = (courseId: string) => ({
   payload: courseId,
 });
 
-export const setCurrentVideo = (url: string | null) => ({
+export const setCurrentVideo = (url: ICourse | null) => ({
   type: SET_CURRENT_VIDEO,
   payload: url,
 });

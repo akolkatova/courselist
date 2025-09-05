@@ -1,10 +1,10 @@
-import { AppState } from '../../types';
+import { AppState, ICourse } from '../../types';
 import { CourseActionType } from '../actions';
 
 const initState: AppState = {
   courses: [],
   purchased: [],
-  current: '',
+  current: null,
   user: null,
 };
 
@@ -15,13 +15,15 @@ export const coursesReducer = (
 ) => {
   switch (action.type) {
     case CourseActionType.SET_COURSES: {
+      const courses = Object.values(action.payload);
+      courses.filter((el) => ("courseId" in <ICourse>el));
       return { ...state, courses: action.payload };
     }
     case CourseActionType.PURCHASE_COURSE: {
       return { ...state, purchased: [...state.purchased, action.payload] };
     }
     case CourseActionType.SET_CURRENT_VIDEO: {
-      return { ...state, currentVideo: action.payload };
+      return { ...state, current: action.payload };
     }
     case CourseActionType.LOGIN_ACTION: {
       localStorage.setItem('user', JSON.stringify(action.payload));

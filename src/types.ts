@@ -15,6 +15,6 @@ export interface ICourse {
 export interface AppState {
   courses: ICourse[];
   purchased: string[];
-  current: string | null;
+  current: ICourse | null;
   user: IUser | null;
 }

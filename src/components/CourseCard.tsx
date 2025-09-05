@@ -17,8 +17,8 @@ export const CourseCard = ({ courseItem }: Props) => {
     dispatch(purchaseCourse(courseId));
   };
 
-  const handlePlay = (courseId: string) => {
-    dispatch(setCurrentVideo(courseId));
+  const handlePlay = (course: ICourse) => {
+    dispatch(setCurrentVideo(course));
   };
 
   return (
@@ -31,7 +31,7 @@ export const CourseCard = ({ courseItem }: Props) => {
           src={courseItem.videoUrl}
           poster="../src/img/preview.png"
           onPlay={() => {
-            handlePlay(courseItem.courseId);
+            handlePlay(courseItem);
           }}
         ></video>
         <div>PRICE: ${courseItem.price}</div>
